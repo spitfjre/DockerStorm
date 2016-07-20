@@ -24,10 +24,6 @@ RUN apt-get autoremove -y
 ENV STORM_VERSION 1.0.1
 ENV ZOOKEEPER_VERSION 3.4.8
 
-# Create storm group and user
-ENV STORM_HOME /usr/share/apache-storm
-RUN groupadd storm; useradd --gid storm --home-dir /home/storm --create-home --shell /bin/bash storm
-
 # Download and Install Apache Storm
 RUN wget http://mirror.softaculous.com/apache/storm/apache-storm-$STORM_VERSION/apache-storm-$STORM_VERSION.tar.gz
 RUN tar -xzvf apache-storm-$STORM_VERSION.tar.gz -C /usr/share
@@ -45,6 +41,11 @@ RUN mkdir -p /usr/share/storm/datadir/zookeeper
 RUN apt-get install supervisor -y
 RUN mkdir -p /var/log/supervisor
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Create storm group and user
+ENV STORM_HOME "/usr/share/apache-storm-1.0.1/bin"
+ENV PATH=$PATH:$STORM_HOME
+RUN groupadd storm; useradd --gid storm --home-dir /home/storm --create-home --shell /bin/bash storm
 
 EXPOSE 8080
 
