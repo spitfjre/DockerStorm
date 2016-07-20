@@ -5,16 +5,15 @@
 #
 # BUILD: docker build -t eventstorm/dockerstorm -f ./Dockerfile .
 #
-# RUN (service) : docker run eventstorm/dockerstorm
+# RUN (service) : docker run -p 8080:8080 -t -i eventstorm/dockerstorm
 #
-
-# use the ubuntu base image provided by dotCloud
-FROM ubuntu
+FROM ubuntu:15.10
 
 RUN apt-get update
 RUN apt-get upgrade -y
 
 # Install Oracle JDK 8 and others useful packages
+RUN apt-get install -y python-software-properties software-properties-common
 RUN add-apt-repository -y ppa:webupd8team/java
 RUN apt-get update
 RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
@@ -37,4 +36,11 @@ RUN tar -xzvf zookeeper-$ZOOKEEPER_VERSION.tar.gz -C /usr/share
 RUN rm -rf zookeeper-$ZOOKEEPER_VERSION.tar.gz
 ADD zoo.cfg /usr/share/zookeper-$ZOOKEEPER_VERSION/conf/
 
-ENTRYPOINT ["/bin/bash", "/home/storm/entrypoint.sh"]
+# Download and Install Supervisor
+RUN apt-get install supervisor -y
+RUN mkdir -p /var/log/supervisor
+ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+EXPOSE 8080
+
+CMD ["/usr/bin/supervisord"]
