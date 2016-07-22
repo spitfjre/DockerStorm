@@ -47,6 +47,7 @@ ENV STORM_HOME "/usr/share/apache-storm-1.0.1/bin"
 ENV PATH=$PATH:$STORM_HOME
 RUN groupadd storm; useradd --gid storm --home-dir /home/storm --create-home --shell /bin/bash storm
 
+# Expose ports
 EXPOSE 8080
 
 # Copy project
