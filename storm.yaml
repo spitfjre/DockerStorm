@@ -33,8 +33,8 @@ nimbus.seeds: ["localhost"]
 #     - org.mycompany.MyDecorator
 #
 ## Locations of the drpc servers
-# drpc.servers:
-#     - "server1"
+drpc.servers:
+      - "localhost"
 #     - "server2"
 
 ## Metrics Consumers
