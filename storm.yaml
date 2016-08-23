@@ -48,6 +48,5 @@ drpc.servers:
 
 
 workers.childopts: "-Xmx1024m"
-#workers.childopts: "-Xmx512m"
 supervisor.childopts: "-Xmx1024m"
 drpc.childopts: "-Xmx1024m"
