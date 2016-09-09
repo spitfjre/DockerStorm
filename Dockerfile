@@ -20,7 +20,7 @@ RUN apt-get clean autoclean
 RUN apt-get autoremove -y
 RUN apt-get install vim -y
 
-ENV STORM_VERSION 1.0.1
+ENV STORM_VERSION 1.0.2
 ENV ZOOKEEPER_VERSION 3.4.8
 
 # Download and Install Apache Storm
